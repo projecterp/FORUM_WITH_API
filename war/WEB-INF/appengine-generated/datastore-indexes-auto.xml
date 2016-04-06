@@ -1,4 +1,4 @@
-<!-- Indices written at Mon, 7 Mar 2016 15:35:32 IST -->
+<!-- Indices written at Wed, 6 Apr 2016 22:18:54 IST -->
 
 <datastore-indexes>
 
@@ -7,14 +7,6 @@
         <property name="sem" direction="asc"/>
         <property name="sub" direction="asc"/>
         <property name="time" direction="desc"/>
-    </datastore-index>
-
-    <!-- Used 3 times in query history -->
-    <datastore-index kind="Post" ancestor="false" source="auto">
-        <property name="sem" direction="asc"/>
-        <property name="sub" direction="asc"/>
-        <property name="topic" direction="asc"/>
-        <property name="str" direction="desc"/>
     </datastore-index>
 
 </datastore-indexes>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datastore-indexes autoGenerate="true">
+    <datastore-index kind="Post" ancestor="false">
+        <property name="str" direction="asc" />
+        <property name="sem" direction="asc" />
+        <property name="sub" direction="asc" />
+        <property name="time" direction="desc" />
+        <property name="topic" direction="asc" />
+        <property name="rating" direction="desc" />
+    </datastore-index>
+    <datastore-index kind="Topics" ancestor="false">
+        <property name="sem" direction="asc" />
+        <property name="time" direction="desc" />
+        <property name="sub" direction="asc" />
+        <property name="topic" direction="asc" />
+    </datastore-index>
+</datastore-indexes>

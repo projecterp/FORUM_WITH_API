@@ -3,6 +3,7 @@ package querymanager;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 
 import board.Post;
 import board.Topics;
@@ -22,6 +23,7 @@ public class QueryManager {
 	private DatastoreService ds;
 	private static String rate = "";
 
+	 
 	public QueryManager() {
 		ds = DatastoreServiceFactory.getDatastoreService();
 	}
@@ -33,13 +35,11 @@ public class QueryManager {
 				user_id);
 
 		Filter validFilter = CompositeFilterOperator.and(idFilter, strFilter);
-		Query q = new Query("Post").setFilter(validFilter).addSort("time",
-				SortDirection.DESCENDING);
+		Query q = new Query("Post").setFilter(validFilter);
 		PreparedQuery pq = ds.prepare(q);
-		for (Entity result : pq.asIterable()) {
-			if (result == null) {
-				return true;
-			}
+		for (Iterator<Entity> iterator = pq.asIterable().iterator(); iterator
+				.hasNext();) {
+			return true;
 		}
 		return false;
 	}
@@ -69,22 +69,21 @@ public class QueryManager {
 	}
 
 	public boolean isTopicRepeat(String sem, String sub, String topic) {
+		
 		Filter semFilter = new FilterPredicate("sem", FilterOperator.EQUAL, sem);
-
 		Filter subFilter = new FilterPredicate("sub", FilterOperator.EQUAL, sub);
-		Filter topicFilter = new FilterPredicate("topic", FilterOperator.EQUAL,
-				topic);
+		Filter topicFilter = new FilterPredicate("topic", FilterOperator.EQUAL,topic);
 
-		Filter validFilter = CompositeFilterOperator.and(subFilter, semFilter,
-				topicFilter);
-		Query q = new Query("Topics").setFilter(validFilter).addSort("time",
-				SortDirection.DESCENDING);
+		Filter validFilter = CompositeFilterOperator.and(subFilter, semFilter,topicFilter);
+		
+		Query q = new Query("Topics").setFilter(validFilter);
+		
 		PreparedQuery pq = ds.prepare(q);
-		Entity result = pq.asSingleEntity();
-		if (result == null) {
-			return false;
+		for (Iterator<Entity> iterator = pq.asIterable().iterator(); iterator
+				.hasNext();) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 
 	public boolean isRepeatedRating(String rating) {
@@ -99,7 +98,7 @@ public class QueryManager {
 		return false;
 	}
 
-	public PreparedQuery getPostIterable(String sub, String sem, String topic) {
+	public ArrayList<Entity> getPostIterable(String sub, String sem, String topic) {
 		Filter semFilter = new FilterPredicate("sem", FilterOperator.EQUAL, sem);
 		Filter subFilter = new FilterPredicate("sub", FilterOperator.EQUAL, sub);
 		Filter topicFilter = new FilterPredicate("topic", FilterOperator.EQUAL,
@@ -109,7 +108,12 @@ public class QueryManager {
 		Query q = new Query("Post").setFilter(validFilter).addSort("time",
 				SortDirection.DESCENDING);
 		PreparedQuery pq = ds.prepare(q);
-		return pq;
+		ArrayList<Entity> result =new ArrayList<Entity>();
+		for(Entity xyz:pq.asIterable())	
+		{
+			result.add(xyz); 
+		}
+		return result;
 	}
 
 	public Entity getPostEntity(String time, String sem) {
@@ -126,11 +130,11 @@ public class QueryManager {
 
 	public Entity addPostToEntity(String user_id, String sem, String sub,
 			String topic, String str, String tag) {
-		ArrayList<String> tags = new ArrayList();
+		ArrayList<String> tags = new ArrayList<String>();
 		for (String retval : tag.split(",")) {
 			tags.add(retval);
 		}
-		ArrayList<String> temp = new ArrayList();
+		ArrayList<String> temp = new ArrayList<String>();
 		temp.add("");
 		int a = 0;
 		float b = 0;

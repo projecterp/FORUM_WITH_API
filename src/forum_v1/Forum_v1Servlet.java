@@ -51,11 +51,12 @@ public class Forum_v1Servlet extends HttpServlet {
 		sub = req.getParameter("sub");
 		sem = req.getParameter("sem");
 		topic = req.getParameter("topic");
-		post_str = req.getParameter("post");
-		tag = req.getParameter("tag");
+		
 		if (!(req.getParameter("btn") == null)) {
 			if ((req.getParameter("btn").equals("ADD POST"))) {
 				PrintWriter out=resp.getWriter();
+				post_str = req.getParameter("post");
+				tag = req.getParameter("tag");
 				query.addPost(user_id, sub, sem, topic, post_str, tag);
 				/*
 				 * Query q = new Query("Post").addSort("time",
@@ -111,15 +112,15 @@ public class Forum_v1Servlet extends HttpServlet {
 				 * xyz.setProperty("time",sdf.format(cal.getTime()));
 				 * ds.put(xyz); } }
 				 */
-				RequestDispatcher jsp = req.getRequestDispatcher("/topics.jsp");
+				RequestDispatcher jsp = req.getRequestDispatcher("/WEB-INF/topics.html");
 				jsp.forward(req, resp);
 
 			} else if (req.getParameter("btn").equals("Search")) {
-				RequestDispatcher jsp = req.getRequestDispatcher("/topics.jsp");
+				RequestDispatcher jsp = req.getRequestDispatcher("/topics.html");
 				jsp.forward(req, resp);
 			}
 		} else {
-			RequestDispatcher jsp = req.getRequestDispatcher("/index2.jsp");
+			RequestDispatcher jsp = req.getRequestDispatcher("/index2.html");
 			jsp.forward(req, resp);
 		}
 		/*

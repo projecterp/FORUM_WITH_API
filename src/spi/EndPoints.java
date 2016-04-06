@@ -15,7 +15,7 @@ import advance_querymanager.advPostQuery.Adv_QueryManager;
 import board.*;
 import consts.Constants;
 
-@Api(name = "forumAPI", version = "v1", scopes = { Constants.EMAIL_SCOPE }, clientIds = {
+@Api(name = "forumAPI", version = "v1", scopes = { Constants.EMAIL_SCOPE} , clientIds = {
 		Constants.WEB_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID }, description = "API for the MNIT ERP  FORUM Backend application.")
 
 public class EndPoints {
@@ -44,19 +44,17 @@ public class EndPoints {
 	
 // used in the topics.jsp
 	
-	@ApiMethod(name = "loadTopics", path = "loadTopics")
-	public ArrayList<Entity> getTopics(@Named("sem") String sem,@Named("sub") String sub)
+	@ApiMethod(name = "loadTopics", path = "loadTopics", httpMethod="POST" )
+	public ArrayList<Entity> loadTopics(Topics obj)
 	{
-		ArrayList<Entity> topics=qa.getTopics(sem,sub);
+		ArrayList<Entity> topics=qa.getTopics(obj.getSem(),obj.getSub());
 		return topics;
-		
 	}
 	
 	@ApiMethod(name = "addTopic", path = "addTopic")
-	public Entity addTopic(@Named("topic_name")String topic,@Named("sem") String sem,@Named("sub") String sub)
+	public void addTopic(@Named("topic_name")String topic,@Named("sem") String sem,@Named("sub") String sub)
 	{
 		Entity new_topic=qa.addTopic(topic, sem, sub);
-		return new_topic;
 	}
   
 	@ApiMethod(name="getSearchedTopics",path="getSearchedTopics")
@@ -72,15 +70,15 @@ public class EndPoints {
 	@ApiMethod(name = "loadPosts", path = "loadPosts")
 	public ArrayList<Entity> getPosts(@Named("topic")String topic,@Named("sem") String sem,@Named("sub") String sub)
 	{
-		ArrayList<Entity> posts=qa.getPosts(sub, sem, topic);
+		ArrayList<Entity>posts=qa.getPosts(sub, sem, topic);
 		return posts;
 		
 	}
 	
 	@ApiMethod(name = "addPost", path = "addPost")
-	public Entity addPost(final User user,@Named("topic_name")String topic,@Named("sem") String sem,@Named("sub") String sub,@Named("post") String str,@Named("tag")String tag)
+	public Entity addPost(@Named("user")String user,@Named("topic_name")String topic,@Named("sem") String sem,@Named("sub") String sub,@Named("post") String str,@Named("tag")String tag)
 	{
-		Entity new_post=qa.addPost(user.getNickname(), sub, sem, topic, str, tag);
+		Entity new_post=qa.addPost(user, sub, sem, topic, str, tag);
 		return new_post;
 	}
 	

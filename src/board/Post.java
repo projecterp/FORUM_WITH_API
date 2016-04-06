@@ -2,25 +2,33 @@ package board;
 
 import java.util.ArrayList;
 
+import javax.jdo.annotations.Index;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 @Entity
 public class Post {
-
+    @Index
 	private String user_id;
-	private String str;
-	private String time;
-	private String sem;
-	private String sub;
-	private ArrayList<String> comment = new ArrayList();
+    @Index
+    private String str;
+    @Index
+    private String time;
+    @Index
+    private String sem;
+    @Index
+    private String sub;
+    @Index
+    private String topic;
+	private ArrayList<String> comment = new ArrayList<String>();
 	private int comment_count;
-	private ArrayList<String> tag = new ArrayList();
+	private ArrayList<String> tag = new ArrayList<String>();
+	@Index
 	private float rating;
 	private int rating_count;
 
-	void Post() {
+	public  Post() {
 		this.comment.add("");
 		this.comment_count = 0;
 	}

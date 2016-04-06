@@ -1,0 +1,352 @@
+<html>
+<head>
+   <meta charset='utf-8'>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   <script src="script.js"></script>
+   <title>The Posts are...</title>
+   <!-- FOR RATING PART-->
+   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+   <link href="http://www.cssscript.com/wp-includes/css/sticky.css" rel="stylesheet" type="text/css">
+   <!-- END OF RATING PART-->
+
+   <script src="https://cdn.tinymce.com/4/tinymce.min.js" type="text/javascript"></script>
+
+   <script type="text/javascript">
+       tinymce.init({
+         selector: '#mytextarea'
+       });
+   </script>
+
+   <script type="text/javascript">
+     var timeout = setTimeout("location.reload(true);",300000);
+     function resetTimeout() {
+       clearTimeout(timeout);
+       timeout = setTimeout("location.reload(true);",300000);
+     }
+   </script>
+
+
+</head>
+
+<!-- JSP CODE-->
+
+<body>
+  <div id="header">
+     WELCOME TO Virtual ClassRoom<br>
+  <form action="adv_query" method="get" name="form">
+    <input type="hidden" name="flag" id="flag" height="0px" value="show">
+    <input type="hidden" name="rating" height="0px" value="0">
+    <input type="hidden" name="sem" value="<%=request.getParameter("sem")%>">
+    <input type="hidden" name="sub" value="<%=request.getParameter("sub")%>">
+    <input type="hidden" name="topic" value="<%=request.getParameter("topic")%>">
+    <div id='cssmenu'>
+    <ul>
+       <li><a href='#' onClick="document.form.submit();"><span>Home</span></a></li>
+       <li class='active has-sub'><a href='#'><span>Filters</span></a>
+         <ul> 
+            <input type="hidden" name="select" id="select" value="">
+            <li class='has-sub'><a href='#' onClick="s1()"><span>Latest</span></a>
+            </li>
+            <li class='has-sub'><a href='#' onClick="s2()"><span>Most Rated</span></a>
+            </li>
+         </ul>
+       </li>
+   
+       <li class='active has-sub'><a href='#'><span>Custom Search</span></a>
+         <ul>
+           <li class='has-sub'><a href='#' onClick="q1()"><span>By Name</span></a>
+           </li>
+           <li class='has-sub'><a href='#' onClick="q2()"><span>By Tag</span></a>
+           </li>
+           <li class='has-sub'><a href='#' onClick="q3()"><span>By User Name</span></a>
+              <ul>
+                <li><a href='#' onClick="document.form.submit();"><span>Sub Product</span></a></li>
+                <li class='last'><a href='#' onClick="document.form.submit();"><span>Sub Product</span></a></li>
+              </ul>
+           </li>
+         </ul>
+       </li>
+       <li><a href='#' onClick="document.form.submit();"><span>About</span></a></li>
+       <li class='last'><a href='#' onClick="document.form.submit();"><span>Contact</span></a></li>
+    </ul>
+    </div><!-- cssmenu-->
+  </form>
+  </div><!--header-->
+
+
+  <div id="nav1" style="width:400px;height:490px;overflow:auto;background-color:lightgrey;" class="feed">
+    <strong>
+    <font color="red">
+    <p>Your posts are:-</p>
+    </font>
+    </strong>
+    <%
+        Query_All query=new Query_All();
+        String topic;  
+        topic=request.getParameter("topic");     
+        PreparedQuery pq =query.getPosts(request.getParameter("sub"),request.getParameter("sem"),topic);
+        for (Entity result : pq.asIterable()) {	
+    %>			
+          <div id="my_div" class="feed">
+            <form action="tag" method="get">
+            tags:
+    <%
+            ArrayList<String> tag=new ArrayList();
+            tag=(ArrayList)result.getProperty("tag");
+            for(String str:tag)
+            {
+    %> 
+              <input type="Submit" class="btn" name="btn" class="view" value="<%=str%>">
+    <%
+            }
+    %>
+              <input type="hidden" name="time" height="0px" value="<%=result.getProperty("time")%>">
+              <input type="hidden" name="flag" height="0px" value="true">
+              <input type="hidden" name="rating" height="0px" value="<%=request.getParameter("rating")%>">
+              <input type="hidden" name="sem" value="<%=request.getParameter("sem")%>">
+              <input type="hidden" name="sub" value="<%=request.getParameter("sub")%>">
+              <input type="hidden" name="topic" value="<%=request.getParameter("topic")%>">
+
+              <p><%=result.getProperty("str")%></p>
+              <input type="Submit" name="btn" class="btn" class="view" value="view">
+            </form>  
+          </div><!--my_div-->
+    <%
+        }
+    %>
+    <br>    
+  </div><!--nav1-->
+  
+  
+  <div id="section" style="overflow:auto;background-color:grey;" class="feed">
+    <form action="forum_v1" method="get">
+    
+        <input type="hidden" name="flag"height="0px" value="false">
+        <input type="hidden" name="rating" height="0px" value="<%=request.getParameter("rating")%>">
+        <input type="hidden" name="sem" value="<%=request.getParameter("sem")%>">
+        <input type="hidden" name="sub" value="<%=request.getParameter("sub")%>">
+        <input type="hidden" name="topic" value="<%=request.getParameter("topic")%>">
+
+        <input id="add_new_post" type="button" class="btn" value="ADD NEW POST" onClick="activate_new_post()">
+
+     <div id="new_post" style="display:none;background-color:none;width: 800px;" class="feed">
+       <p>NEW POST:-</p>
+       <p><textarea id="mytextarea" name="post">Hello World!</textarea></p>
+       <br><br><br><br><br><br><br><br><br><br>
+       <p>tags:<input type="text" id="tag" name="tag"></p>
+       <p><input type="Submit" name="btn" class="btn" value="ADD POST"></p>
+     </div>
+    </form>
+
+    <form id="1" action="tag" method="get">
+        <input type="hidden" name="flag" height="0px" value="search">
+        <input type="hidden" name="rating" height="0px" value="<%=request.getParameter("rating")%>">
+        <input type="hidden" name="sem" value="<%=request.getParameter("sem")%>">
+        <input type="hidden" name="sub" value="<%=request.getParameter("sub")%>">
+        <input type="hidden" name="topic" value="<%=request.getParameter("topic")%>">
+        
+        <div id="name_search" style="display:none">
+          <input type="hidden" name="search_type" value="Name">
+          Keyword:<input type="search" name="search">
+          <input type="Submit" name="btn" class="btn" value="Find">
+        </div>
+    </form>
+    <form id="2" action="tag" method="get">
+        <input type="hidden" name="flag" height="0px" value="search">
+        <input type="hidden" name="rating" height="0px" value="<%=request.getParameter("rating")%>">
+        <input type="hidden" name="sem" value="<%=request.getParameter("sem")%>">
+        <input type="hidden" name="sub" value="<%=request.getParameter("sub")%>">
+        <input type="hidden" name="topic" value="<%=request.getParameter("topic")%>">
+            
+        <div id="tag_search" style="display:none">
+          <input type="hidden" name="search_type" value="Tag">
+          Tag:<input type="search" name="search">
+          <input type="Submit" name="btn" class="btn" value="Find">
+        </div>
+    </form>    
+    <form id="3" action="tag" method="get">
+        <input type="hidden" name="flag" height="0px" value="search">
+        <input type="hidden" name="rating" height="0px" value="<%=request.getParameter("rating")%>">
+        <input type="hidden" name="sem" value="<%=request.getParameter("sem")%>">
+        <input type="hidden" name="sub" value="<%=request.getParameter("sub")%>">
+        <input type="hidden" name="topic" value="<%=request.getParameter("topic")%>">
+        
+        
+        <div id="user_search" style="display:none">
+          <input type="hidden" name="search_type" value="User">
+          User_name:<input type="search" name="search">
+          <input type="Submit" name="btn" class="btn" value="Find">
+        </div>        
+    </form>     
+    
+    <% if(request.getParameter("flag").equals("true"))
+       {
+    %>
+         <div id="post" style="background-color:none" class="feed">
+         <form action="tag" method="get">
+    <%
+         Entity result=query.getPostByTime(request.getParameter("time"),request.getParameter("sem"));
+         ArrayList<String> tag=new ArrayList();
+         tag=(ArrayList)result.getProperty("tag");
+         for(String str:tag)
+         {
+    %>
+            
+             <input type="Submit" class="btn" name="btn" value="<%=str%>">    
+    <%
+         }
+    %>
+         <p><%=result.getProperty("str")%></p>
+         <br>
+    <%
+         ArrayList<String> comments =(ArrayList<String>)result.getProperty("comment");  
+         for(String cmnt:comments)
+         { 
+    %>   
+           <p><%=cmnt%></p>
+    <%
+         } 
+    %>
+         <p style="float:right">Rating : <%=result.getProperty("rating")%>/5</p>
+         <input type="hidden" id="count" name="rating" value="0">     
+         <p><%=result.getProperty("comment_count")%>comments</p>   
+   
+         <input class="star star-5" id="star-5-2" type="radio" onclick="count_increment5()" name="star"/>
+         <label class="star star-5" for="star-5-2"></label>
+         <input class="star star-4" id="star-4-2" type="radio" onclick="count_increment4()" name="star"/>
+         <label class="star star-4" for="star-4-2"></label>
+         <input class="star star-3" id="star-3-2" type="radio" onclick="count_increment3()" name="star"/>
+         <label class="star star-3" for="star-3-2"></label>
+         <input class="star star-2" id="star-2-2" type="radio" onclick="count_increment2()" name="star"/>
+         <label class="star star-2" for="star-2-2"></label>
+         <input class="star star-1" id="star-1-2" type="radio" onclick="count_increment1()" name="star"/>
+         <label class="star star-1" for="star-1-2"></label>
+  
+         <br>      
+         <p><input type="Submit" class="btn" name="btn" value="rate" style="float:right"></p>   
+         <br>
+         <textarea  name="comment"></textarea><br>
+         <br>
+
+         <input type="hidden" name="time" height="0px" value="<%=result.getProperty("time")%>">
+         <input type="hidden" name="sem"  height="0px" value="<%=request.getParameter("sem")%>">
+         <input type="hidden" name="sub"  height="0px" value="<%=request.getParameter("sub")%>">
+         <input type="hidden" name="flag" height="0px" value="true">
+         <input type="hidden" name="topic"  height="opx" value="<%=topic%>"> 
+         <input type="Submit" name="btn" class="btn" value="PostComment">
+         </form>
+         </div><!--post-->     
+    <%
+       }
+    %>
+
+    <%
+        Adv_QueryManager aq = new Adv_QueryManager();
+        ArrayList<Entity> temp=new ArrayList<Entity>();
+
+        if(request.getParameter("flag").equals("show"))
+        {  
+          String sem=request.getParameter("sem");
+          String sub=request.getParameter("sub");
+          String topic_str=request.getParameter("topic");
+          if(request.getParameter("select").equals("Latest"))
+          {
+            temp=(ArrayList<Entity>)aq.getLatestPosts(sem,sub,topic_str);
+          }
+          if(request.getParameter("select").equals("Most Rated"))
+          {
+            temp=(ArrayList<Entity>)aq.getMostRatedPosts(sem,sub,topic_str);
+          }
+    %>
+          <p>Your posts are:-</p>
+    <%          
+          for (Entity result :temp) 
+          {	
+    %>
+            <div id="my_div" class="feed">
+            <form action="tag" method="get">
+              tags: 
+    <%
+              ArrayList<String> tag=new ArrayList();
+              tag=(ArrayList)result.getProperty("tag");
+              for(String str:tag)
+              {
+    %> 
+                <input type="Submit" class="btn" name="btn" class="view" value="<%=str%>">
+    <%
+              }
+    %>
+              <input type="hidden" name="time" height="0px" value="<%=result.getProperty("time")%>">
+              <input type="hidden" name="flag" height="0px" value="true">
+              <input type="hidden" name="rating" height="0px" value="<%=request.getParameter("rating")%>">
+              <input type="hidden" name="sem" value="<%=request.getParameter("sem")%>">
+              <input type="hidden" name="sub" value="<%=request.getParameter("sub")%>">
+              <input type="hidden" name="topic" value="<%=request.getParameter("topic")%>">
+
+              <p><%=result.getProperty("str")%></p> 
+              <input type="Submit" name="btn" class="btn" class="view" value="view">
+            </form> 
+            </div><!--my_div-->
+    <%
+          } 
+        }
+    %>
+
+
+    <%
+        if(request.getParameter("flag").equals("search"))
+        {
+          if(request.getParameter("search_type").equals("Name"))
+          {
+            temp=(ArrayList<Entity>)aq.getNamePosts(request.getParameter("sem"),request.getParameter("sub"),request.getParameter("topic"),request.getParameter("search"));
+          }
+          else if(request.getParameter("search_type").equals("Tag"))
+          {
+            temp=(ArrayList<Entity>)aq.getTagPosts(request.getParameter("sem"),request.getParameter("sub"),request.getParameter("topic"),request.getParameter("search"));
+          }
+          else
+          {
+            temp=(ArrayList<Entity>)aq.getUserPosts(request.getParameter("sem"),request.getParameter("sub"),request.getParameter("topic"),request.getParameter("search"));
+          }
+    %>
+          <p>Your posts are:-</p>
+    <%     
+          for (Entity result :temp) 
+          {	
+    %>
+            <div id="my_div" class="feed">
+            <form action="tag" method="get">
+              tags: 
+    <%
+              ArrayList<String> tag=new ArrayList();
+              tag=(ArrayList)result.getProperty("tag");
+              for(String str:tag)
+              {
+    %> 
+                <input type="Submit" class="btn" name="btn" class="view" value="<%=str%>">
+    <%
+              }
+    %>
+              <input type="hidden" name="time" height="0px" value="<%=result.getProperty("time")%>">
+              <input type="hidden" name="flag" height="0px" value="true">
+              <input type="hidden" name="rating" height="0px" value="<%=request.getParameter("rating")%>">
+              <input type="hidden" name="sem" value="<%=request.getParameter("sem")%>">
+              <input type="hidden" name="sub" value="<%=request.getParameter("sub")%>">
+              <input type="hidden" name="topic" value="<%=request.getParameter("topic")%>">
+
+              <p><%=result.getProperty("str")%></p> 
+              <input type="Submit" name="btn" class="btn" class="view" value="view">
+            </form> 
+            </div><!--my_div-->
+    <%
+          } 
+        }
+    %>
+  </div><!--section-->
+<div id="footer">
+Copyright © ProjectERP
+</div>
+</body>
+</html>

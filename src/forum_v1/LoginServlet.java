@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
 			 * userService.createLogoutURL(req.getRequestURI()) +
 			 * "'> LogOut </a>");
 			 */
-			RequestDispatcher jsp = req.getRequestDispatcher("class_home.jsp");
+			RequestDispatcher jsp = req.getRequestDispatcher("class_home.html");
 			jsp.forward(req, resp);
 		} else {
 			resp.getWriter().println(

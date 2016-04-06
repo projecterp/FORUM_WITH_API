@@ -1,0 +1,154 @@
+<html>
+<head>
+<title>CLASSES</title>
+</head>
+<style>
+body { 
+    background:  url("img/2.jpg") no-repeat fixed center; 
+    color:white;
+    font-size: 23px !important;
+    margin-top:-70px;
+    padding:0;
+}
+p{
+margin-right: 80px;
+}
+
+#sem{
+ width:120px; 
+ height:23px;  
+ background-color: #D3D3D3;
+}
+
+#sub{
+ width:300px; 
+ height:23px;  
+ background-color: #D3D3D3;
+}
+#btn{
+ width:150px; 
+ height:23px;  
+ background-color: #D3D3D3;
+}
+#title{
+float:center;
+}
+#nickname{
+ align="right";
+ margin-right:25px;
+ color:#F9CCCA;
+}
+.circle
+{
+width:50px;
+height:50px;
+border-radius:50%;
+font-size:20px;
+color:#fff;
+line-height:50px;
+text-align:center;
+background:#000;
+float:right;
+margin-right:30px;
+box-shadow: inset 0 0 10px 0 #999;
+}
+
+</style>
+<body>
+<form  action="topics" method="get">
+<center>
+<br><br>
+
+<br>
+<br>
+<!-- 
+<%
+		UserService userService = UserServiceFactory.getUserService();
+		User user = userService.getCurrentUser();
+
+%>
+ -->
+ 
+<input type="hidden" id="user" name="user_id" value="pranavpatel956">
+<input type="hidden" name="search" value="">
+
+<!--  <%
+String var=user.getNickname();
+int index=var.indexOf("@");
+String start=var.substring(0,1);
+if(index!=-1)
+{var=var.substring(0,index);}
+%>
+-->
+
+<div class="circle" style="text-transform:uppercase"><b>P</p></b></div>
+
+<div id="title">
+
+<font size=8 color="#E0D8E0">WELCOME &nbspTO&nbsp VIRTUAL &nbspCLASS-ROOM</font>
+</div>
+<font size="5" color="white" align="right">
+<div id="nickname"><%=var%></div>
+</font>
+<br><br><br><br>
+<font size=5 color="white">Semester:&nbsp&nbsp&nbsp</font><select id="sem" name="sem" onClick="myFunction()">
+            <option value="first">FIRST</option>
+            <option value="second">SECOND</option>
+            <option value="third">THIRD</option>
+            <option value="fourth">FOURTH</option>
+            <option value="fifth">FIFTH</option>
+            <option value="sixth">SIXTH</option>
+            <option value="seventh">SEVENTH</option>
+            <option value="eigth">EIGTH</option>                        
+         </select>
+         
+<!--<br><br><br><br>Subject:  <select name='sub'>
+            <option value='daa'>DESIGN & ANALYSIS OF ALGORITHM</option>
+            <option value='comp'>COMPUTER ORGANIZATION & MICROPROCESSOR</option>
+            <option value='flat'>FINETE LANGUAGES & AUTOMATA THEORY</option>
+            <option value='dms'>DISCRETE MATHEMTICS</option>
+            <option value='sp'>SYSTEM PROGRAMMING</option>
+            <option value='eco'>ECONOMICS</option>          
+        </select><br><br>
+        <input type='Submit' name='btn'   value='ENTER THE CLASS'>         
+-->
+
+<script>
+  function myFunction()
+  {
+         var x = document.getElementById("sem").value;
+         if(x=="fourth")
+         {
+         document.getElementById("my_div").innerHTML=
+         "<br><br>Subject: &nbsp<select name='sub' id='sub'>"+
+            "<option value='daa'>DESIGN & ANALYSIS OF ALGORITHM</option>" +
+            "<option value='comp'>COMPUTER ORGANIZATION & MICROPROCESSOR</option>" +
+            "<option value='flat'>FINETE LANGUAGES & AUTOMATA THEORY</option>" +
+            "<option value='dms'>DISCRETE MATHEMTICS</option>" +
+            "<option value='sp'>SYSTEM PROGRAMMING</option>" +
+            "<option value='eco'>ECONOMICS</option>" +                       
+        "</select><br><br>" +
+        "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type='Submit' name='btn' id='btn' value='ENTER THE CLASS'>";
+          }
+          else if(x=="first")
+          {
+          document.getElementById("my_div").innerHTML=
+         "<br><br>Subject: &nbsp<select name='sub' id='sub'>"+
+            "<option value='cad'>CAD</option>" +
+            "<option value='comp'>COMPUTER ORGANIZATION & MICROPROCESSOR</option>" +
+            "<option value='flat'>FINETE LANGUAGES & AUTOMATA THEORY</option>" +
+            "<option value='dms'>DISCRETE MATHEMTICS</option>" +
+            "<option value='sp'>SYSTEM PROGRAMMING</option>" +
+            "<option value='eco'>ECONOMICS</option>" +                       
+        "</select><br><br>" +
+        "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type='Submit' name='btn' id='btn' value='ENTER THE CLASS'>";
+          }
+          
+  }
+</script>
+<div id="my_div">
+</form>
+</div>
+</center>
+</body>
+</html>

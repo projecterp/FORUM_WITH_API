@@ -48,13 +48,7 @@ public class Query_All {
 	}
 
 	public ArrayList<Entity> getPosts(String sub, String sem, String topic) {
-		ArrayList<Entity> result =new ArrayList<Entity>();
-		PreparedQuery pq=query.getPostIterable(sub, sem, topic);
-		for(Entity xyz:pq.asIterable())	
-		{
-			result.add(xyz); 
-		}
-		return result;
+		return  query.getPostIterable(sub, sem, topic); 
 	}
 
 	public ArrayList<Entity> getTopics(String sem, String sub) {
@@ -62,7 +56,7 @@ public class Query_All {
 	}
 
 	public Entity addTopic(String topic_str, String sem, String sub) {
-		if (!(query.isTopicRepeat(sem, sub, topic_str))) {
+		if ((query.isTopicRepeat(sem, sub, topic_str))==false) {
 			return query.addTopicToEntity(topic_str, sem, sub);
 		}
 		return null;

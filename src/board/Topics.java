@@ -2,14 +2,19 @@ package board;
 
 import java.util.ArrayList;
 
+import javax.jdo.annotations.Index;
 import javax.persistence.Entity;
 
 @Entity
 public class Topics {
 
+	@Index
 	private String sem;
+	@Index
 	private String sub;
+	@Index
 	private String time;
+	@Index
 	private String topic;
 
 	public String getSem() {

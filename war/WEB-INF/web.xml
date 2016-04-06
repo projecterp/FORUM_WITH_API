@@ -17,12 +17,12 @@
      <url-pattern>/class_home.jsp</url-pattern>
     </servlet-mapping>
     <servlet>
-     <servlet-name>topics-jsp</servlet-name>
-     <jsp-file>/WEB-INF/topics.jsp</jsp-file>
+     <servlet-name>topic</servlet-name>
+     <servlet-class>forum_v1.topicServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-     <servlet-name>topics-jsp</servlet-name>
-     <url-pattern>/topics.jsp</url-pattern>
+     <servlet-name>topic</servlet-name>
+     <url-pattern>/topics</url-pattern>
     </servlet-mapping>
 	<servlet>
 		<servlet-name>Forum_v1</servlet-name>

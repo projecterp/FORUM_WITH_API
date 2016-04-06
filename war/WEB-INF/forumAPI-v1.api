@@ -1,14 +1,14 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://myapp.appspot.com/_ah/api",
+  "root" : "https://mnit3erp.appspot.com/_ah/api",
   "name" : "forumAPI",
   "version" : "v1",
   "description" : "API for the MNIT ERP  FORUM Backend application.",
   "defaultVersion" : false,
   "discovery" : [ "PUBLIC" ],
   "adapter" : {
-    "bns" : "https://myapp.appspot.com/_ah/spi",
+    "bns" : "https://mnit3erp.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -26,38 +26,13 @@
     "maxAge" : 0
   },
   "methods" : {
-    "forumAPI.loadTopics" : {
-      "path" : "loadTopics",
-      "httpMethod" : "GET",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "replace this with your Web cliend ID", "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "spi.EndPoints.getTopics",
-      "request" : {
-        "parameters" : {
-          "sem" : {
-            "type" : "string",
-            "required" : true
-          },
-          "sub" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "forumAPI.getSearchedTopics" : {
       "path" : "getSearchedTopics",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
-      "clientIds" : [ "replace this with your Web cliend ID", "292824132082.apps.googleusercontent.com" ],
+      "clientIds" : [ "AIzaSyAzbPLzvprcdVX9bbQUpA00Ci0a23nBSLI", "495391269113-k3oghl07mv84mnqnep564trn1joiij5q.apps.googleusercontent.com" ],
       "rosyMethod" : "spi.EndPoints.getSearchedTopics",
       "request" : {
         "parameters" : {
@@ -80,50 +55,13 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "forumAPI.addPost" : {
-      "path" : "addPost",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "replace this with your Web cliend ID", "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "spi.EndPoints.addPost",
-      "request" : {
-        "parameters" : {
-          "topic_name" : {
-            "type" : "string",
-            "required" : true
-          },
-          "sem" : {
-            "type" : "string",
-            "required" : true
-          },
-          "sub" : {
-            "type" : "string",
-            "required" : true
-          },
-          "post" : {
-            "type" : "string",
-            "required" : true
-          },
-          "tag" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "forumAPI.getSearchedPost" : {
       "path" : "getSearchedPost",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
-      "clientIds" : [ "replace this with your Web cliend ID", "292824132082.apps.googleusercontent.com" ],
+      "clientIds" : [ "AIzaSyAzbPLzvprcdVX9bbQUpA00Ci0a23nBSLI", "495391269113-k3oghl07mv84mnqnep564trn1joiij5q.apps.googleusercontent.com" ],
       "rosyMethod" : "spi.EndPoints.getSearchedPosts",
       "request" : {
         "parameters" : {
@@ -154,17 +92,33 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "forumAPI.loadPosts" : {
-      "path" : "loadPosts",
-      "httpMethod" : "GET",
+    "forumAPI.loadTopics" : {
+      "path" : "loadTopics",
+      "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
-      "clientIds" : [ "replace this with your Web cliend ID", "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "spi.EndPoints.getPosts",
+      "clientIds" : [ "AIzaSyAzbPLzvprcdVX9bbQUpA00Ci0a23nBSLI", "495391269113-k3oghl07mv84mnqnep564trn1joiij5q.apps.googleusercontent.com" ],
+      "rosyMethod" : "spi.EndPoints.loadTopics",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "forumAPI.addTopic" : {
+      "path" : "addTopic",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "AIzaSyAzbPLzvprcdVX9bbQUpA00Ci0a23nBSLI", "495391269113-k3oghl07mv84mnqnep564trn1joiij5q.apps.googleusercontent.com" ],
+      "rosyMethod" : "spi.EndPoints.addTopic",
       "request" : {
         "parameters" : {
-          "topic" : {
+          "topic_name" : {
             "type" : "string",
             "required" : true
           },
@@ -180,20 +134,61 @@
         "body" : "empty"
       },
       "response" : {
-        "body" : "autoTemplate(backendResponse)"
+        "body" : "empty"
       }
     },
-    "forumAPI.addTopic" : {
-      "path" : "addTopic",
+    "forumAPI.addPost" : {
+      "path" : "addPost",
       "httpMethod" : "POST",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
-      "clientIds" : [ "replace this with your Web cliend ID", "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "spi.EndPoints.addTopic",
+      "clientIds" : [ "AIzaSyAzbPLzvprcdVX9bbQUpA00Ci0a23nBSLI", "495391269113-k3oghl07mv84mnqnep564trn1joiij5q.apps.googleusercontent.com" ],
+      "rosyMethod" : "spi.EndPoints.addPost",
       "request" : {
         "parameters" : {
+          "user" : {
+            "type" : "string",
+            "required" : true
+          },
           "topic_name" : {
+            "type" : "string",
+            "required" : true
+          },
+          "sem" : {
+            "type" : "string",
+            "required" : true
+          },
+          "sub" : {
+            "type" : "string",
+            "required" : true
+          },
+          "post" : {
+            "type" : "string",
+            "required" : true
+          },
+          "tag" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "forumAPI.loadPosts" : {
+      "path" : "loadPosts",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "AIzaSyAzbPLzvprcdVX9bbQUpA00Ci0a23nBSLI", "495391269113-k3oghl07mv84mnqnep564trn1joiij5q.apps.googleusercontent.com" ],
+      "rosyMethod" : "spi.EndPoints.getPosts",
+      "request" : {
+        "parameters" : {
+          "topic" : {
             "type" : "string",
             "required" : true
           },
@@ -285,22 +280,30 @@
             }
           }
         }
+      },
+      "Topics" : {
+        "id" : "Topics",
+        "type" : "object",
+        "properties" : {
+          "sem" : {
+            "type" : "string"
+          },
+          "sub" : {
+            "type" : "string"
+          },
+          "time" : {
+            "type" : "string"
+          },
+          "topic" : {
+            "type" : "string"
+          }
+        }
       }
     },
     "methods" : {
-      "spi.EndPoints.getTopics" : {
-        "response" : {
-          "$ref" : "EntityCollection"
-        }
-      },
       "spi.EndPoints.getSearchedTopics" : {
         "response" : {
           "$ref" : "EntityCollection"
-        }
-      },
-      "spi.EndPoints.addPost" : {
-        "response" : {
-          "$ref" : "Entity"
         }
       },
       "spi.EndPoints.getSearchedPosts" : {
@@ -308,14 +311,24 @@
           "$ref" : "EntityCollection"
         }
       },
-      "spi.EndPoints.getPosts" : {
+      "spi.EndPoints.loadTopics" : {
+        "request" : {
+          "$ref" : "Topics"
+        },
         "response" : {
           "$ref" : "EntityCollection"
         }
       },
       "spi.EndPoints.addTopic" : {
+      },
+      "spi.EndPoints.addPost" : {
         "response" : {
           "$ref" : "Entity"
+        }
+      },
+      "spi.EndPoints.getPosts" : {
+        "response" : {
+          "$ref" : "EntityCollection"
         }
       }
     }
