@@ -1,8 +1,8 @@
-<!-- Indices written at Wed, 6 Apr 2016 22:18:54 IST -->
+<!-- Indices written at Thu, 7 Apr 2016 18:47:12 IST -->
 
 <datastore-indexes>
 
-    <!-- Used 1 time in query history -->
+    <!-- Used 9 times in query history -->
     <datastore-index kind="Topics" ancestor="false" source="auto">
         <property name="sem" direction="asc"/>
         <property name="sub" direction="asc"/>

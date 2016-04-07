@@ -58,9 +58,9 @@ public class EndPoints {
 	}
   
 	@ApiMethod(name="getSearchedTopics",path="getSearchedTopics")
-	public ArrayList<Entity> getSearchedTopics(@Named("search")String search,@Named("sem") String sem,@Named("sub") String sub)
+	public ArrayList<Entity> getSearchedTopics(Topics obj)
 	{
-		ArrayList<Entity> topics=qa.getSearchedTopics(sem, sub, search);
+		ArrayList<Entity> topics=qa.getSearchedTopics(obj.getSem(),obj.getSub(),obj.getTopic());
 		return topics;
 	}
 	

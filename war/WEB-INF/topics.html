@@ -9,9 +9,9 @@
 function init() {
 
                 //Parameters are APIName,APIVersion,CallBack function,API Root 
-   gapi.client.load('forumAPI', 'v1',null, 'https://mnit3erp.appspot.com/_ah/api/');
-   console.log("Loaded");
- 
+   gapi.client.load('forumAPI', 'v1',function(){ListTopics();}, 'http://localhost:8888/_ah/api/');
+   console.log("Loaded"); 
+    
 }
 </script>
 
@@ -36,13 +36,46 @@ function getQueryParameter ( parameterName ) {
 }
 
 function ListTopics()
-{
+{    
+     var search=getQueryParameter("search");
+     if(search.length>0)
+     {
+        ListSearchedTopics();
+     }
+     else
+     {
+       var obj={};
+       obj.sem=getQueryParameter("sem");
+       obj.sub=getQueryParameter("sub");          
+       console.log(obj);
+       gapi.client.forumAPI.loadTopics(obj).execute(function(resp) {
+                        console.log(resp);
+                        if (!resp.code) {
+                                resp.items = resp.items || [];    
+                                var result= "<table class='table table-striped table-hover' style='width:800px'><thead> <tr class='warning'><th>#</th><th>Topic Name</th><th>Date Added</th></tr></thead><tbody>" ;
+                                for (var i=0;i<resp.items.length;i++) {
+                                        result = result+ "<tr id='tr' class='active'>" +"<td>" + (i+1) + "</td>" + "<td style='text-align:left'><input type='Submit' name='topic' height='10' style='width:auto' class='view' value='" + resp.items[i].properties.topic + "'>"
+                                        + "</td>"
+                                        +"<td>" + resp.items[i].properties.time +"</td></tr>";  
+                                }
+                                result=result+ "<tbody></tbody></table>" ;
+                                document.getElementById('table').innerHTML = document.getElementById('table').innerHTML + result;
+                                
+                        }
+                        
+                });
+     
+     }
+}
 
-     var obj={};
-     obj.sem=getQueryParameter("sem");
-     obj.sub=getQueryParameter("sub");          
-     console.log(obj);
-     gapi.client.forumAPI.loadTopics(obj).execute(function(resp) {
+function ListSearchedTopics()
+{    
+       var search=getQueryParameter("search");
+       var obj={};
+       obj.sem=getQueryParameter("sem");
+       obj.sub=getQueryParameter("sub");      
+       obj.topic=getQueryParameter("search");    
+       gapi.client.forumAPI.getSearchedTopics(obj).execute(function(resp) {
                         console.log(resp);
                         if (!resp.code) {
                                 resp.items = resp.items || [];    
@@ -60,7 +93,6 @@ function ListTopics()
                 });
      
 }
-
 
 </script>
 <script>
@@ -228,38 +260,47 @@ textarea {
 
 </head>
 
-<body onload="ListTopics()">
+<body >
 	<div id="header">
 		WELCOME TO Virtual ClassRoom
 		<div class="circle" style="text-transform: uppercase">
-			<b>P </b>
+			<b></b>
 		</div>
 		<font size="5" color="white" align="right">
-			<div id="nickname">P</div>
+			<div id="nickname"></div>
 		</font>
 	</div>
 
 
 	<input type="hidden" size="0" name="flag" value="false">
 	<input type="hidden" size="0" name="rating" value="0">
-	<input type="hidden" size="0" name="sem"
+	<input type="hidden" size="0" name="sem" id="sem"
 		value="getQueryParameter('sem')">
-	<input type="hidden" size="0" name="sub"
+	<input type="hidden" size="0" name="sub" id="sub"
 		value="getQueryParameter('sub')">
-
-
+		
+    <script>
+					    document.getElementById('sem').value=getQueryParameter("sem");
+					    document.getElementById('sub').value=getQueryParameter("sub");
+    </script>
+		   
 	<div style="float: right">
-		<form action="forum_v1" method="get" class="navbar-form navbar-left"
+		<form action="forum_v1" method="get" id="search_form" class="navbar-form navbar-left"
 			role="search">
 			<div class="form-group">
 				<input type="text" name="search" class="form-control"
 					placeholder="Search"> <input type="hidden" size="0"
 					name="flag" value="false"> <input type="hidden" size="0"
 					name="rating" value="0"> <input type="hidden" size="0"
-					name="sem" value="getQueryParameter('sem')"> <input
-					type="hidden" size="0" name="sub" value="getQueryParameter('sub')">
+					name="sem" id="sem" value=""> <input
+					type="hidden" size="0" name="sub" id="sub" value="">
+			
+		   <script>
+					    document.getElementById('search_form').elements["sem"].value=getQueryParameter("sem");
+					    document.getElementById('search_form').elements["sub"].value=getQueryParameter("sub");
+		   </script>
 			</div>
-			<button type="submit" name="btn" class="btn btn-default"
+			<button type="Submit" name="btn" class="btn btn-default"
 				style="background-color: lightgrey; color: blue;" value="Search">Search</button>
 		</form>
 	</div>
@@ -270,38 +311,23 @@ textarea {
 				<p>Your Topics are:-</p>
 			</div>
 	</font>
-		<form action="forum_v1" method="get">
-			<form action="javascript:void(0);">
+		   <form action="forum_v1" method="get">
+		   		<input type="hidden" size="0" name="flag" value="false"> 
+		   		<input type="hidden" size="0" name="rating" value="0"> 
+			    <input type="hidden" size="0" name="search" value=""> 
+			    <input type="hidden" size="0" id="sem" name="sem" value=""> 
+			    <input type="hidden" size="0" id="sub" name="sub" value="">	
 				<div id="table"></div>
 			</form>
 			<div id="nav">
 
-				<!--
-<%
-if(request.getParameter("btn").equals("Search"))
-{
-      temp=query.getSearchedTopics(request.getParameter("sem"),request.getParameter("sub"),request.getParameter("search"));		   
-		  for(Entity xyz:temp)
-		  {  
-%>
 
--->
-				<tr id="tr1" class="active">
-					<td><%=i%></td>
-					<td><input type="Submit" name="btn" style="width: auto"
-						height="10" class="view" value="<%=xyz.getProperty("topic")%>"></td>
-					<td><%=xyz.getProperty("time")%></td>
-				</tr>
-
-				</tbody>
-				</table>
-			</div>
 			<div id="section" style="color: white">
 				<input class="btn" type="button" style="color: blue"
 					value="NEW TOPIC" onClick="activate_new_topic()">
 					
 				<div id="new_topic" style="display: none;">
-					<form action="forum_v1" >
+					<form action="forum_v1"  id="new_topic_form" >
 					<br>
 					<textarea name="topic"> </textarea>
 					<br> <br> <input type="hidden" size="0" name="flag"
@@ -313,8 +339,8 @@ if(request.getParameter("btn").equals("Search"))
 						class="btn" type="Submit" name="btn" style="color: blue"
 						value="ADD NEW TOPIC">
 					<script>
-					    document.getElementById('sem').value=getQueryParameter("sem");
-					    document.getElementById('sub').value=getQueryParameter("sub");
+					    document.getElementById('new_topic_form').elements["sem"].value=getQueryParameter("sem");
+					    document.getElementById('new_topic_form').elements["sub"].value=getQueryParameter("sub");
 					</script>
 					</form>	
 				</div>
@@ -328,7 +354,7 @@ Copyright © ProjectERP
 		</form>
 </body>
 </script>
-<script src="https://apis.google.com/js/client.js?onload=init"></script>
+<script src="http://apis.google.com/js/client.js?onload=init"></script>
 </body>
 </html>
 

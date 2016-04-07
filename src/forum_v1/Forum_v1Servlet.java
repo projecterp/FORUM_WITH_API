@@ -116,11 +116,11 @@ public class Forum_v1Servlet extends HttpServlet {
 				jsp.forward(req, resp);
 
 			} else if (req.getParameter("btn").equals("Search")) {
-				RequestDispatcher jsp = req.getRequestDispatcher("/topics.html");
+				RequestDispatcher jsp = req.getRequestDispatcher("/WEB-INF/topics.html");
 				jsp.forward(req, resp);
 			}
 		} else {
-			RequestDispatcher jsp = req.getRequestDispatcher("/index2.html");
+			RequestDispatcher jsp = req.getRequestDispatcher("/WEB-INF/index2.html");
 			jsp.forward(req, resp);
 		}
 		/*
